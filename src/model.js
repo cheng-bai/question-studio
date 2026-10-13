@@ -1,3 +1,7 @@
+import { questionImageReferences, rewriteImageDestinations } from './question-package.js';
+import { resolveAsset, additionsFor } from './question-identity.js';
+import { validateStoredAdditions } from './question-addition-format.js';
+export { normalizePath, resolveAsset } from './question-identity.js';
 import { isVisual, validParameters, parameterSummary } from './visualizations.js';
 import { suggestTags } from './tagging.js';
 export { suggestTags } from './tagging.js';
@@ -188,27 +192,8 @@ function matchCentralAnswers(lines, start, questions, warnings, fileName) {
   for (const q of questions) if (!q.answer && !q.analysis && !byNumber.has(q.number)) warnings.push(`集中答案未提供第 ${q.number} 题的可匹配答案。`);
 }
 
-export function normalizePath(path) {
-  const parts = [];
-  for (const p of path.replace(/\\/g, '/').split('/')) {
-    if (!p || p === '.') continue;
-    if (p === '..') parts.pop(); else parts.push(p);
-  }
-  return parts.join('/');
-}
-export function resolveAsset(url, sourceFile, assets) {
-  if (/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(url)) return url;
-  if (/^[a-z]+:|^\/\//i.test(url)) return null;
-  let decoded; try { decoded = decodeURIComponent(url); } catch { decoded = url; }
-  const base = sourceFile.includes('/') ? sourceFile.slice(0, sourceFile.lastIndexOf('/') + 1) : '';
-  const key = normalizePath(base + decoded);
-  return assets[key] || assets[normalizePath(decoded)] || null;
-}
 export function exportMarkdown(state, teacher = false) {
-  const withImages = (text, q) => text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (all, alt, url) => {
-    const data = resolveAsset(url, q.source.assetFile || q.source.file, state.assets);
-    return data ? `![${alt}](${data})` : all;
-  });
+  const withImages = (text, q) => { const replacements = new Map(); for (const ref of questionImageReferences(text)) { const image = resolveAsset(ref, q.source.assetFile || q.source.file, state.assets); if (image) replacements.set(ref, image); } return rewriteImageDestinations(text, replacements); };
   let questionNumber = 0, visualNumber = 0;
   return `# ${state.title || '未命名讲义'}\n\n${state.subtitle || ''}\n\n` + state.blocks.map(q => {
     if (isVisual(q)) return `## 互动探究 ${++visualNumber}：${q.visualization.title}\n\n${q.stem}\n\n> 演示参数：${parameterSummary(q)}\n> 交互内容请使用编辑器或导出的课堂 HTML。本 Markdown 为静态探究任务。\n${teacher && q.notes ? `\n**教学备注：** ${q.notes}\n` : ''}`;
@@ -219,6 +204,7 @@ export function exportMarkdown(state, teacher = false) {
       if (q.answer) text += `\n**答案：** ${withImages(q.answer, q)}\n`;
       if (q.analysis) text += `\n**解析：**\n\n${withImages(q.analysis, q)}\n`;
       if (q.notes) text += `\n**教学备注：**\n\n${q.notes}\n`;
+      for (const a of additionsFor(state, q)) text += `\n**AI 补充（待核）：${a.title}**\n\n${withImages(a.markdown, q)}\n${a.visualization ? `\n> 交互图：y = a(x-h)^2+k，初始 a=${a.visualization.parameters.a}, h=${a.visualization.parameters.h}, k=${a.visualization.parameters.k}。动态演示请在题目资料页查看。\n` : ''}`;
     }
     return text;
   }).join('\n---\n\n');
@@ -233,5 +219,6 @@ export function validateProject(value) {
   const identities = value.exams.flatMap(e => e.questions).filter(q => q.protocol).map(q => `${q.protocol.questionId}@${q.protocol.revision}`);
   if (new Set(identities).size !== identities.length) throw new Error('工程文件包含重复的题目版本。');
   if (typeof value.title !== 'string' || typeof value.subtitle !== 'string' || Object.values(value.assets).some(v => typeof v !== 'string' || !/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(v))) throw new Error('工程文件格式错误或图片格式不受支持。');
+  validateStoredAdditions(value.questionAdditions);
   return value;
 }

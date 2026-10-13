@@ -4,4 +4,5 @@ import App from './App';
 import './style.css';
 import './density.css';
 import './workflows.css';
+import './question-details.css';
 createRoot(document.getElementById('root')).render(<App/>);
