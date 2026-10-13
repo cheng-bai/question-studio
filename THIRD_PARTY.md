@@ -14,6 +14,8 @@
 | markdown-it-texmath | MIT |
 | KaTeX | MIT |
 | DOMPurify | MPL-2.0 OR Apache-2.0 |
+| Ajv | MIT |
+| YAML | ISC |
 | lucide-react | ISC |
 
 构建工具 Vite 使用 MIT 许可证，其传递依赖保留各自许可。DOMPurify 为双重许可，随附包内许可证列明两种选项。

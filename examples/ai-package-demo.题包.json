@@ -1,0 +1,56 @@
+{
+  "format": "question-studio-package",
+  "schema_version": "0.1",
+  "package_id": "demo-function-package",
+  "title": "AI 标准题包 · 合成示例",
+  "questions": [
+    {
+      "question_id": "demo-q1",
+      "revision": 1,
+      "file": "questions/demo-q1.md",
+      "sha256": "70516750cdf23dcdecfaa77d2f67a3b46f8cc4567263a7eb5e6fa5d24650f4d9"
+    },
+    {
+      "question_id": "demo-q2",
+      "revision": 1,
+      "file": "questions/demo-q2.md",
+      "sha256": "1de5ddd7767c69a379b67ff5e600aadf2b0a0780aadba5c8b8c572f100396775"
+    },
+    {
+      "question_id": "demo-q3",
+      "revision": 1,
+      "file": "questions/demo-q3.md",
+      "sha256": "1827ee3bba6ed7ae452f22e63d6ecf43d1d7e09e51bf152090fc7ac643236c43"
+    }
+  ],
+  "files": {
+    "questions/demo-q1.md": "---\nschema_version: \"0.1\"\nquestion_id: demo-q1\nrevision: 1\ntype: 填空题\ntags:\n  - 函数\ntag_origin: suggested\nsource:\n  title: 题序合成演示\n  file: demo.md\n  original_number: \"1\"\n  line: 1\n---\n\n## 题干\n\n已知 $f(x)=2x+1$，则 $f(2)=$ ______。\n\n## 答案\n\n$5$\n\n## 解析\n\n代入 $x=2$，得到 $2\\times 2+1=5$。\n\n## 教学备注\n\n合成公开示例，不含真实试卷。\n",
+    "questions/demo-q2.md": "---\nschema_version: \"0.1\"\nquestion_id: demo-q2\nrevision: 1\ntype: 选择题\ntags:\n  - 函数\ntag_origin: suggested\nsource:\n  title: 题序合成演示\n  file: demo.md\n  original_number: \"2\"\n  line: 5\n---\n\n## 题干\n\n函数 $y=x^2$ 的图像关于哪条直线对称？\n\nA. $x=0$　B. $x=1$　C. $y=1$　D. $y=x$\n\n## 答案\n\nA\n\n## 解析\n\n对任意 $x$，有 $(-x)^2=x^2$，因此图像关于 $y$ 轴即直线 $x=0$ 对称。\n\n## 教学备注\n\n合成公开示例，不含真实试卷。\n",
+    "questions/demo-q3.md": "---\nschema_version: \"0.1\"\nquestion_id: demo-q3\nrevision: 1\ntype: 解答题\ntags:\n  - 函数\ntag_origin: suggested\nsource:\n  title: 题序合成演示\n  file: demo.md\n  original_number: \"3\"\n  line: 9\n---\n\n## 题干\n\n已知 $f(x)=x^2-2x+3$，求其最小值，并写出取得最小值时 $x$ 的值。\n\n![二次函数图像示意](assets/04a03af995c235f4eb38085a3c881a85c6514391042d59831c621e19e2186fd3.png)\n\n## 答案\n\n最小值为 $2$，此时 $x=1$。\n\n## 解析\n\n配方得 $f(x)=(x-1)^2+2\\ge 2$，等号当且仅当 $x=1$ 成立。\n\n## 教学备注\n\n合成公开示例，不含真实试卷。\n",
+    "assets/04a03af995c235f4eb38085a3c881a85c6514391042d59831c621e19e2186fd3.png": "data:image/png;base64,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"
+  },
+  "handout": {
+    "title": "函数基础讲义",
+    "subtitle": "按教学顺序重组的合成演示",
+    "items": [
+      {
+        "question_id": "demo-q3",
+        "question_revision": 1,
+        "role": "例题",
+        "reason": "先讲配方与最值"
+      },
+      {
+        "question_id": "demo-q1",
+        "question_revision": 1,
+        "role": "练习",
+        "reason": "代入计算"
+      },
+      {
+        "question_id": "demo-q2",
+        "question_revision": 1,
+        "role": "检查",
+        "reason": "图像对称性"
+      }
+    ]
+  }
+}
