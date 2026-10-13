@@ -228,6 +228,10 @@ export function validateProject(value) {
   const validQ = q => q && ['id', 'number', 'type', 'stem', 'answer', 'analysis', 'notes', 'tags'].every(k => typeof q[k] === 'string') && q.source && ['file', 'title', 'originalNumber'].every(k => typeof q.source[k] === 'string') && Number.isInteger(q.source.line) && (q.tagOrigin === undefined || ['source', 'suggested', 'manual'].includes(q.tagOrigin)) && (q.tagsConfirmed === undefined || typeof q.tagsConfirmed === 'boolean') && (q.kind === undefined || q.kind === 'question' || isVisual(q) && q.visualization && typeof q.visualization.title === 'string' && q.visualization.title.trim().length > 0 && validParameters(q.visualization.scene, q.visualization.parameters));
   if (value.blocks.some(q => !validQ(q) || typeof q.instanceId !== 'string') || value.exams.some(e => !e || typeof e.id !== 'string' || typeof e.title !== 'string' || !Array.isArray(e.questions) || e.questions.some(q => !validQ(q)))) throw new Error('工程文件中的题目数据不完整。');
   if (new Set(value.blocks.map(q => q.instanceId)).size !== value.blocks.length || new Set(value.exams.flatMap(e => e.questions.map(q => q.id))).size !== value.exams.flatMap(e => e.questions).length) throw new Error('工程文件包含重复 ID。');
+  const allQuestions = [...value.blocks, ...value.exams.flatMap(e => e.questions)];
+  if (allQuestions.some(q => q.protocol !== undefined && (!q.protocol || typeof q.protocol.questionId !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(q.protocol.questionId) || !Number.isInteger(q.protocol.revision) || q.protocol.revision < 1))) throw new Error('工程文件包含无效的题包身份或版本。');
+  const identities = value.exams.flatMap(e => e.questions).filter(q => q.protocol).map(q => `${q.protocol.questionId}@${q.protocol.revision}`);
+  if (new Set(identities).size !== identities.length) throw new Error('工程文件包含重复的题目版本。');
   if (typeof value.title !== 'string' || typeof value.subtitle !== 'string' || Object.values(value.assets).some(v => typeof v !== 'string' || !/^data:image\/(png|jpe?g|webp|gif);base64,/i.test(v))) throw new Error('工程文件格式错误或图片格式不受支持。');
   return value;
 }

@@ -13,7 +13,7 @@ export function droppedFiles(transfer) {
     if (++scanned > 5000) throw new Error('文件夹项目过多，请选择更小的试卷资料文件夹。');
     const path = parent + entry.name;
     if (entry.isFile) {
-      if (/\.md$/i.test(path) || imageFile(path)) result.push({ path, file: await new Promise((yes, no) => entry.file(yes, no)) });
+      if (/\.(md|json)$/i.test(path) || imageFile(path)) result.push({ path, file: await new Promise((yes, no) => entry.file(yes, no)) });
     } else if (entry.isDirectory) {
       const reader = entry.createReader();
       while (true) {
