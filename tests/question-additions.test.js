@@ -46,3 +46,8 @@ test('published supplement example matches the versioned three-question package'
   const out = await prepareAdditionImport(state, result); assert.equal(out.added, 2);
   assert.equal(additionsFor(out.state, out.question).length, 2); await validateAdditionSnapshotHashes(out.state);
 });
+
+test('legacy Markdown export remains permissive for incomplete code or display math during editing', () => {
+  const { state } = setup();
+  for (const text of ['计算：\n$$\nx+1', '示例：\n```md\n尚未写完']) { state.blocks[0].stem = text; assert.ok(exportMarkdown(state).includes(text)); assert.ok(exportMarkdown(state, true).includes(text)); }
+});

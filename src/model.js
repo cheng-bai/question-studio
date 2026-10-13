@@ -193,7 +193,9 @@ function matchCentralAnswers(lines, start, questions, warnings, fileName) {
 }
 
 export function exportMarkdown(state, teacher = false) {
-  const withImages = (text, q) => { const replacements = new Map(); for (const ref of questionImageReferences(text)) { const image = resolveAsset(ref, q.source.assetFile || q.source.file, state.assets); if (image) replacements.set(ref, image); } return rewriteImageDestinations(text, replacements); };
+  // Keep legacy MD export permissive while users are editing incomplete math/code.
+  const withImages = (text, q) => text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (all, alt, url) => { const data = resolveAsset(url, q.source.assetFile || q.source.file, state.assets); return data ? `![${alt}](${data})` : all; });
+  const withAdditionImages = (text, q) => { const replacements = new Map(); for (const ref of questionImageReferences(text)) { const image = resolveAsset(ref, q.source.assetFile || q.source.file, state.assets); if (image) replacements.set(ref, image); } return rewriteImageDestinations(text, replacements); };
   let questionNumber = 0, visualNumber = 0;
   return `# ${state.title || '未命名讲义'}\n\n${state.subtitle || ''}\n\n` + state.blocks.map(q => {
     if (isVisual(q)) return `## 互动探究 ${++visualNumber}：${q.visualization.title}\n\n${q.stem}\n\n> 演示参数：${parameterSummary(q)}\n> 交互内容请使用编辑器或导出的课堂 HTML。本 Markdown 为静态探究任务。\n${teacher && q.notes ? `\n**教学备注：** ${q.notes}\n` : ''}`;
@@ -204,7 +206,7 @@ export function exportMarkdown(state, teacher = false) {
       if (q.answer) text += `\n**答案：** ${withImages(q.answer, q)}\n`;
       if (q.analysis) text += `\n**解析：**\n\n${withImages(q.analysis, q)}\n`;
       if (q.notes) text += `\n**教学备注：**\n\n${q.notes}\n`;
-      for (const a of additionsFor(state, q)) text += `\n**AI 补充（待核）：${a.title}**\n\n${withImages(a.markdown, q)}\n${a.visualization ? `\n> 交互图：y = a(x-h)^2+k，初始 a=${a.visualization.parameters.a}, h=${a.visualization.parameters.h}, k=${a.visualization.parameters.k}。动态演示请在题目资料页查看。\n` : ''}`;
+      for (const a of additionsFor(state, q)) text += `\n**AI 补充（待核）：${a.title}**\n\n${withAdditionImages(a.markdown, q)}\n${a.visualization ? `\n> 交互图：y = a(x-h)^2+k，初始 a=${a.visualization.parameters.a}, h=${a.visualization.parameters.h}, k=${a.visualization.parameters.k}。动态演示请在题目资料页查看。\n` : ''}`;
     }
     return text;
   }).join('\n---\n\n');
