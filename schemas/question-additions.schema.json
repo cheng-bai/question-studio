@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "题序定点补充 v0.1",
+  "type": "object", "additionalProperties": false,
+  "required": ["format", "schema_version", "target", "additions"],
+  "properties": {
+    "format": {"const": "question-studio-additions"},
+    "schema_version": {"const": "0.1"},
+    "target": {"$ref": "#/definitions/target"},
+    "additions": {"type": "array", "minItems": 1, "maxItems": 20, "items": {"$ref": "#/definitions/addition"}}
+  },
+  "definitions": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$"},
+    "target": {
+      "type": "object", "additionalProperties": false,
+      "required": ["question_id", "question_revision", "content_sha256"],
+      "properties": {
+        "question_id": {"$ref": "#/definitions/id"},
+        "question_revision": {"type": "integer", "minimum": 1, "maximum": 9007199254740991},
+        "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "visualization": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "parameters", "x_range", "y_range"],
+      "properties": {
+        "kind": {"const": "quadratic"},
+        "parameters": {
+          "type": "object", "additionalProperties": false, "required": ["a", "h", "k"],
+          "properties": {"a": {"type": "number", "minimum": -10, "maximum": 10}, "h": {"type": "number", "minimum": -10, "maximum": 10}, "k": {"type": "number", "minimum": -10, "maximum": 10}}
+        },
+        "x_range": {"$ref": "#/definitions/range"},
+        "y_range": {"$ref": "#/definitions/range"}
+      }
+    },
+    "range": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "number", "minimum": -100, "maximum": 100}},
+    "addition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["addition_id", "kind", "title", "markdown", "author"],
+      "properties": {
+        "addition_id": {"$ref": "#/definitions/id"},
+        "kind": {"enum": ["analysis", "method", "notes", "visualization"]},
+        "title": {"type": "string", "minLength": 1, "maxLength": 200},
+        "markdown": {"type": "string", "minLength": 1, "maxLength": 100000},
+        "author": {"type": "string", "minLength": 1, "maxLength": 200},
+        "visualization": {"$ref": "#/definitions/visualization"}
+      },
+      "if": {"properties": {"kind": {"const": "visualization"}}},
+      "then": {"required": ["visualization"]},
+      "else": {"not": {"required": ["visualization"]}}
+    }
+  }
+}
