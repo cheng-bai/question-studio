@@ -1,0 +1,88 @@
+/* Keep complete questions legible while giving the working surfaces more room. */
+.app-header{height:60px;padding:0 24px}
+.brand-symbol{width:34px;height:34px;border-radius:9px}
+.brand strong{font-size:25px}
+.button{padding:8px 12px}
+.panel-heading{height:72px;padding:15px 24px}
+.eyebrow{margin-bottom:4px}
+.panel-heading h1,.panel-heading h2{font-size:20px}
+.editor-hint{padding:0 25px 9px}
+.paper-scroll{padding:0 20px 24px}
+.paper{padding:22px 28px 18px;max-width:900px;min-height:500px}
+.paper-masthead{padding-bottom:10px}
+.handout-title{font-size:25px}
+.handout-subtitle{padding:3px 0 10px}
+.paper-rule{margin-bottom:8px}
+.paper-block{margin:5px -10px;padding:6px 9px 10px}
+.block-toolbar{height:24px;margin-bottom:4px}
+.block-content{grid-template-columns:24px minmax(0,1fr);gap:7px}
+.markdown{line-height:1.7}
+.markdown p{margin-bottom:5px}
+.markdown ul,.markdown ol{margin:5px 0}
+.markdown .katex-display{margin:5px 0;padding:3px 0}
+.markdown img{margin:7px auto}
+.block-source{margin-top:7px}
+.teacher-notes{padding:8px 11px;margin-top:9px}
+.teacher-notes>div{margin-bottom:7px}
+.drop-zone{min-height:76px;margin-top:12px}
+.drop-zone>div{width:25px;height:25px;margin-bottom:5px}
+.drop-zone p{margin-top:4px}
+.paper-footer{margin-top:16px;padding-top:10px}
+.editor-footer,.library-footer{height:32px}
+.library-panel .panel-heading{padding-left:20px;padding-right:20px}
+.library-switch{padding:0 20px 8px}
+.library-switch button{padding:6px 12px}
+.file-drop-invitation{margin:0 20px 9px;padding:8px 11px;gap:9px}
+.file-drop-invitation>span{flex-direction:row;align-items:center;gap:9px;flex-wrap:wrap}
+.library-tools{padding:0 20px}
+.search-box{padding:7px 10px}
+.exam-select{margin-top:7px;padding:7px 10px}
+.library-filter{padding:9px 0}
+.bank-scroll{padding:0 20px 20px}
+.exam-group{padding-top:12px}
+.exam-heading{margin-bottom:8px}
+.bank-card{margin-bottom:7px}
+.bank-card-top{padding:8px 12px 4px}
+.bank-body{padding:3px 12px 8px}
+.bank-body .markdown{line-height:1.65}
+.bank-card footer{padding:5px 12px}
+.visual-library{padding-top:12px}
+.visual-library-intro{padding-bottom:10px}
+.visual-library-card{margin-bottom:9px}
+.visual-card-body{padding:0 14px 11px}
+.visual-thumbnail{max-height:84px}
+.modal>header{padding:16px 22px}
+.modal header p{margin-top:4px}
+.modal-footer{padding:12px 22px}
+.import-tools{padding:10px 22px}
+.import-columns{grid-template-columns:minmax(0,.85fr) minmax(0,1.2fr)}
+.import-source,.import-preview{padding:14px 18px;max-height:63vh}
+.import-source>label{gap:5px;margin-bottom:10px}
+.import-source textarea{line-height:1.65}
+.import-split-rules{padding:10px;border:1px solid #dce5d4;border-radius:5px;background:#eef3e8;margin-bottom:12px}
+.import-split-rules label{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;font-size:11px;color:#5c7551}
+.import-split-rules select{min-width:0;width:100%;border:1px solid #cfdbc5;border-radius:4px;background:white;padding:7px;color:#425c37;font-size:11px}
+.import-split-rules p{font-size:10px;line-height:1.7;color:#778a69;margin-top:7px}
+.split-summary{display:flex;flex-wrap:wrap;gap:5px;font-size:10px;color:#5e7950;background:#edf3e6;padding:7px 9px;border-radius:4px;margin-bottom:8px}
+.preview-heading{padding-bottom:9px;margin-bottom:8px}
+.import-exam{margin:8px 0 18px}
+.import-exam h3{margin-bottom:8px}
+.import-question{padding:10px;margin-bottom:7px}
+.import-q-heading{margin-bottom:7px}
+.import-tag{margin-bottom:7px;padding:4px 6px}
+.import-question details{margin-top:7px}
+.image-import-note{margin-top:15px;padding-top:11px;gap:7px}
+.print-settings{padding:17px}
+.print-settings h3{margin-bottom:13px}
+.print-settings>label{margin-bottom:13px}
+.print-preview{padding:10px}
+.print-density{display:flex;gap:5px;margin-bottom:15px}
+.print-density button{flex:1;border:1px solid #d7e2ce;border-radius:5px;background:white;padding:7px 5px;font-size:10px;color:#6e855f}
+.print-density button[aria-pressed=true]{border-color:#849e73;background:#eaf1e2;color:#345c2e}
+@media(min-width:1550px){.paper-scroll{padding-left:30px;padding-right:30px}.panel-heading{padding-left:30px;padding-right:30px}.editor-hint{padding-left:31px;padding-right:31px}.paper{padding:24px 34px 20px}.library-panel .panel-heading,.library-tools,.bank-scroll{padding-left:24px;padding-right:24px}}
+@media(max-width:1050px){.app-header{padding:0 17px}.panel-heading{padding:14px 18px}.paper{padding:20px 23px}.library-panel .panel-heading,.library-tools,.bank-scroll{padding-left:16px;padding-right:16px}}
+@media(max-width:760px){.app-header{height:62px;padding:0 12px}.header-actions .button{padding:7px}.editor-panel{min-height:520px}.panel-heading,.library-panel .panel-heading{height:68px;padding:12px 16px}.paper-scroll{padding:0 12px 16px}.paper{padding:18px;min-height:380px}.handout-title{font-size:23px}.library-switch{padding-left:16px;padding-right:16px}.file-drop-invitation{margin-left:16px;margin-right:16px}.file-drop-invitation>span{flex-direction:column;align-items:flex-start;gap:3px}.import-source,.import-preview{max-height:none}.import-split-rules label{grid-template-columns:1fr;gap:5px}.print-settings{padding:14px}.print-density{grid-column:1/-1;margin:0}.modal>header{padding:14px 17px}.modal-footer{padding:11px 15px}.block-actions{opacity:1}}
+
+.import-warning-list{margin:7px 0 10px}
+.import-warning-list>summary{font-size:10px;color:#9b7b45;cursor:pointer;line-height:1.8}
+@media(min-width:761px){.import-split-rules{position:sticky;top:-14px;z-index:1;box-shadow:0 3px 5px #f8faf2}}
