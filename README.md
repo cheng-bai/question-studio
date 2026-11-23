@@ -19,7 +19,7 @@ Local-first Markdown question editor for mathematics: import questions and image
 - 9 个内置椭圆交互模板，支持独立参数、静态打印与离线课堂 HTML。
 - IndexedDB 自动保存当前工作区，JSON 工程备份与恢复。
 
-当前版本为 **0.4.0 原型**。新增模型无关的 AI 汇编任务与标准题包：
+当前版本为 **0.5.0 原型**。支持模型无关的 AI 汇编任务与标准题包：
 
 - 「AI 汇编」提供方法分类、递进讲义、答案审校任务模板；下载任务说明与完整候选题包，交给你选择的 AI。
 - 回导 `*.题包.json`：每题独立 Markdown 字段、题目身份/版本、配图与建议题序，先校验再预览。
@@ -27,6 +27,12 @@ Local-first Markdown question editor for mathematics: import questions and image
 - 网页与只读 CLI 共用 [题包协议及校验器](docs/题包协议-v0.1.md)。可先在导入题包入口点击「试用 3 道演示题」。
 
 ![AI 汇编任务工作台，使用合成候选题](docs/assets/ai-workflow.png)
+
+每题现在显示可复制的稳定 ID，也可直接按 ID 搜索。点击「题目资料」复制完整单题 AI 任务，再将 `*.补充.json` 回导到该题的解析、可视化、方法或备注页签。回导匹配 ID、版本与内容快照；原解保留，补充可另存修订、移除和撤销。教师导出包含补充，学生版排除。
+
+可视化首版支持 $y=a(x-h)^2+k$ 的参数滑块，使用固定数据模板渲染；尚不支持任意函数或 AI HTML。参见 [单题 ID 与补充协议](docs/单题ID与AI补充协议-v0.1.md)。先导入标准包三道演示题，再拖入 [补充样例](examples/ai-question-demo.补充.json) 可体验。
+
+![单题资料页与二次函数参数探究，使用合成题](docs/assets/question-additions.png)
 
 独立文件题库归档、多讲义库、审校补丁、完整 ChangeSet 与 MCP 尚未实现，见[架构草案](docs/AI原生汇编架构草案.md)。网站不调用远程 AI，数学判断由外部 AI 提供建议并由教师核对；本地考点仍为规则建议。
 
