@@ -19,11 +19,20 @@ Local-first Markdown question editor for mathematics: import questions and image
 - 9 个内置椭圆交互模板，支持独立参数、静态打印与离线课堂 HTML。
 - IndexedDB 自动保存当前工作区，JSON 工程备份与恢复。
 
-当前版本为 **0.3.1 原型**。AI 标准题目包、独立单题归档、题目版本、多讲义库与 CLI/MCP 尚在设计阶段，见[架构草案](docs/AI原生汇编架构草案.md)。当前考点由本地规则建议，不调用远程 AI。
+当前版本为 **0.4.0 原型**。新增模型无关的 AI 汇编任务与标准题包：
+
+- 「AI 汇编」提供方法分类、递进讲义、答案审校任务模板；下载任务说明与完整候选题包，交给你选择的 AI。
+- 回导 `*.题包.json`：每题独立 Markdown 字段、题目身份/版本、配图与建议题序，先校验再预览。
+- 确认收进题库，可选追加到讲义；同版冲突拒绝覆盖、重复题复用、旧版本保留。候选导出默认取所选范围内每题最新版本。
+- 网页与只读 CLI 共用 [题包协议及校验器](docs/题包协议-v0.1.md)。可先在导入题包入口点击「试用 3 道演示题」。
+
+![AI 汇编任务工作台，使用合成候选题](docs/assets/ai-workflow.png)
+
+独立文件题库归档、多讲义库、审校补丁、完整 ChangeSet 与 MCP 尚未实现，见[架构草案](docs/AI原生汇编架构草案.md)。网站不调用远程 AI，数学判断由外部 AI 提供建议并由教师核对；本地考点仍为规则建议。
 
 ## 快速开始
 
-需要 Node.js 20+ 与 npm：
+需要 Node.js 22+ 与 npm：
 
 ```bash
 git clone https://github.com/cheng-bai/question-studio.git
@@ -87,6 +96,7 @@ macOS 可以双击 `启动题序.command`，首次使用仍需先完成 `npm ci 
 ```bash
 npm test
 npm run build
+npm run validate:package -- examples/ai-package-demo.题包.json
 ```
 
 CI 执行模型测试和生产构建。浏览器验收使用独立上下文，需要 Python 3、Google Chrome 以及测试依赖：
@@ -97,6 +107,7 @@ python3 tests/browser_smoke.py
 python3 tests/import-print-browser.py
 python3 tests/print-pagination.py
 python3 tests/numbered-density-browser.py
+python3 tests/package-browser.py
 ```
 
 先启动本地网站。分页测试依赖前一步生成的打印 HTML。交互检查另见 `tests/visual-browser.py`、`tests/visual-state.py`、`tests/visual-layout.py`。测试生成的截图、PDF、JSON 和临时夹具被 Git 忽略；不要提交自己的导入资料。
@@ -104,6 +115,8 @@ python3 tests/numbered-density-browser.py
 验证记录见 [docs/VALIDATION.md](docs/VALIDATION.md)。
 
 ## 持续开发与贡献
+
+[Skill 流程产品化](docs/Skill流程产品化.md)记录了任务模板的教学流程、当前能力与后续方向。
 
 从 [PROJECT_STATE.md](PROJECT_STATE.md) 了解当前状态；开发约定见 [AGENTS.md](AGENTS.md)，贡献说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。AI 原生汇编方案是讨论草案；后续以协议、样例、校验器和可恢复迁移逐步实现。
 
